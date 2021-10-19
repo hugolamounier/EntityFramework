@@ -3,7 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31808.319
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework", "EntityFramework\EntityFramework.csproj", "{7B6ACDC0-F053-49CF-B980-79CD628630F7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.WebApi", "EntityFramework.WebApi\EntityFramework.WebApi.csproj", "{7B6ACDC0-F053-49CF-B980-79CD628630F7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 Presentation", "0 Presentation", "{2EADA651-8617-4057-9425-F84D8C836F15}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 Domain - Business", "1 Domain - Business", "{5854DB78-B22B-4860-A639-0BEBA4BE30C6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 Domain - Models", "2 Domain - Models", "{9F39084C-826F-49B3-89FD-1E2B9AE2E954}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 Infra", "3 Infra", "{2BF4319C-A07E-416E-8010-FFD87AA66A24}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.UnitOfWorks", "EntityFramework.UnitOfWorks\EntityFramework.UnitOfWorks.csproj", "{08A9EA48-E9EC-45A0-A2D0-DE818ABD7338}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,11 +25,19 @@ Global
 		{7B6ACDC0-F053-49CF-B980-79CD628630F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B6ACDC0-F053-49CF-B980-79CD628630F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B6ACDC0-F053-49CF-B980-79CD628630F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08A9EA48-E9EC-45A0-A2D0-DE818ABD7338}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08A9EA48-E9EC-45A0-A2D0-DE818ABD7338}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08A9EA48-E9EC-45A0-A2D0-DE818ABD7338}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08A9EA48-E9EC-45A0-A2D0-DE818ABD7338}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F5725D3F-739B-4B46-831B-6072168FB86A}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7B6ACDC0-F053-49CF-B980-79CD628630F7} = {2EADA651-8617-4057-9425-F84D8C836F15}
+		{08A9EA48-E9EC-45A0-A2D0-DE818ABD7338} = {2BF4319C-A07E-416E-8010-FFD87AA66A24}
 	EndGlobalSection
 EndGlobal

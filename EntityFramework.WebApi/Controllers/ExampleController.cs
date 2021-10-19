@@ -32,12 +32,11 @@ namespace EntityFramework.Controllers
         [Route("TransactionTestRollback")]
         public async Task<IActionResult> TransactionTestRollback([FromBody] Book book)
         {
-
-            using var transaction = _databaseContext.Database.BeginTransaction();
+            using var transaction = await _databaseContext.Database.BeginTransactionAsync();
 
             try
             {
-                var response = _databaseContext.Add<Book>(book);
+                var response = await _databaseContext.AddAsync<Book>(book);
                 _databaseContext.SaveChanges();
 
                 transaction.Commit();
