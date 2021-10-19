@@ -8,11 +8,10 @@ namespace EntityFramework.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
+        [Required, MaxLength(255)]
         public string Title { get; set; }
 
-        [Key, Required]
-        public Author Author { get; set; }  
+        public virtual Author Author { get; set; }  
 
         public DateTime CreatedDate {  get; set; }  
     }

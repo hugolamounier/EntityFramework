@@ -3,11 +3,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EntityFramework.Adapter
 {
-    public class MySQLDatabaseContext : DbContext
+    public class DatabaseContext : DbContext
     {
         public DbSet<Book> Books { get; set; }
+        public DbSet<Author> Authors { get; set; }
 
-        public MySQLDatabaseContext(DbContextOptions<MySQLDatabaseContext> options) : base(options)
+        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
         }
 
@@ -15,10 +16,8 @@ namespace EntityFramework.Adapter
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Book>(entity =>
-            {
-                entity.Property(m => m.Title).HasMaxLength(255);
-            });
+            modelBuilder.Entity<Book>()
+                .HasOne(x => x.Author).WithMany(x => x.Books);
         }
     }
 }

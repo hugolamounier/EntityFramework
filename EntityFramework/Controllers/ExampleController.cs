@@ -16,8 +16,8 @@ namespace EntityFramework.Controllers
     [Route("[controller]")]
     public class ExampleController : ControllerBase
     {
-        private readonly MySQLDatabaseContext _mySqlDatabaseContext;
-        public ExampleController(MySQLDatabaseContext mySqlDatabaseContext)
+        private readonly DatabaseContext _mySqlDatabaseContext;
+        public ExampleController(DatabaseContext mySqlDatabaseContext)
         {
             _mySqlDatabaseContext = mySqlDatabaseContext;
         }

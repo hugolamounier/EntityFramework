@@ -29,7 +29,7 @@ namespace EntityFramework
         public void ConfigureServices(IServiceCollection services)
         {
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<MySQLDatabaseContext>(options => options
+            services.AddDbContext<DatabaseContext>(options => options
                 .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging()

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace EntityFramework.Models
 {
@@ -9,5 +10,7 @@ namespace EntityFramework.Models
 
         [Required]
         public string Name { get; set; }
+
+        public virtual ICollection<Book> Books { get; set; }
     }
 }
