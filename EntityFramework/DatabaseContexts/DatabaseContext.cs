@@ -16,8 +16,10 @@ namespace EntityFramework.Adapter
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Book>()
-                .HasOne(x => x.Author).WithMany(x => x.Books);
+            modelBuilder.Entity<Book>(entity => { 
+                entity.HasOne(x => x.Author).WithMany(x => x.Books);
+                entity.Navigation(x => x.Author).IsRequired();
+            });
         }
     }
 }

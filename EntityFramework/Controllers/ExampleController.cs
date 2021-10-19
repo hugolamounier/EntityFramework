@@ -16,16 +16,16 @@ namespace EntityFramework.Controllers
     [Route("[controller]")]
     public class ExampleController : ControllerBase
     {
-        private readonly DatabaseContext _mySqlDatabaseContext;
-        public ExampleController(DatabaseContext mySqlDatabaseContext)
+        private readonly DatabaseContext _databaseContext;
+        public ExampleController(DatabaseContext databaseContext)
         {
-            _mySqlDatabaseContext = mySqlDatabaseContext;
+            _databaseContext = databaseContext;
         }
 
         [HttpGet]
         public IEnumerable<Book> Get()
         {
-            return _mySqlDatabaseContext.Books.Include("Author").ToList();
+            return _databaseContext.Books.Include("Author").ToList();
         }
 
         [HttpPost]
@@ -33,20 +33,21 @@ namespace EntityFramework.Controllers
         public async Task<IActionResult> TransactionTestRollback([FromBody] Book book)
         {
 
-            using (var transaction = _mySqlDatabaseContext.Database.BeginTransaction())
-            {
-                try
-                {
-                    var response = await _mySqlDatabaseContext.AddAsync<Book>(book);
-                    transaction.Commit();
+            using var transaction = _databaseContext.Database.BeginTransaction();
 
-                    return Ok(response);
-                }
-                catch
-                {
-                    transaction.Rollback();
-                    return BadRequest("Transaction not commited");
-                }
+            try
+            {
+                var response = _databaseContext.Add<Book>(book);
+                _databaseContext.SaveChanges();
+
+                transaction.Commit();
+
+                return Ok(response.Entity);
+            }
+            catch
+            {
+                transaction.Rollback();
+                return BadRequest("Transaction not commited");
             }
         }
 
@@ -55,24 +56,49 @@ namespace EntityFramework.Controllers
         public async Task<IActionResult> TransactionTestCommit([FromBody] InsertBookRequestDto bookRequest)
         {
 
-            using (var transaction = _mySqlDatabaseContext.Database.BeginTransaction())
+            using var transaction = _databaseContext.Database.BeginTransaction();
+
+            try
             {
-                try
-                {
-                    var authorCreated = await _mySqlDatabaseContext.AddAsync(bookRequest.Author);
+                var authorCreated = await _databaseContext.AddAsync(bookRequest.Author);
+                _databaseContext.SaveChanges();
 
-                    bookRequest.Book.Author = authorCreated.Entity;
+                bookRequest.Book.Author = authorCreated.Entity;
 
-                    var response = await _mySqlDatabaseContext.AddAsync(bookRequest.Book);
-                    transaction.Commit();
+                var response = await _databaseContext.AddAsync(bookRequest.Book);
+                _databaseContext.SaveChanges();
 
-                    return Ok(response);
-                }
-                catch
-                {
-                    transaction.Rollback();
-                    return BadRequest("Transaction not commited");
-                }
+                transaction.Commit();
+
+                return Ok(response.Entity);
+            }
+            catch
+            {
+                transaction.Rollback();
+                return BadRequest("Transaction not commited");
+            }
+        }
+
+        [HttpPost]
+        [Route("InserAuthor")]
+        public async Task<IActionResult> InsertAuthor([FromBody] Author author)
+        {
+
+            using var transaction = _databaseContext.Database.BeginTransaction();
+
+            try
+            {
+                var authorCreated = await _databaseContext.AddAsync(author);
+                _databaseContext.SaveChanges();
+
+                transaction.Commit();
+
+                return Ok(authorCreated);
+            }
+            catch(Exception e)
+            {
+                transaction.Rollback();
+                return BadRequest(e.InnerException?.Message ?? e.Message);
             }
         }
     }
